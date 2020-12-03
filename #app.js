@@ -69,7 +69,7 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
       document.getElementById(
         "current-" + activePlayer
       ).textContent = roundScore;
-      alert( activePlayer);
+      
     } else {
       // 1 нэг буусан тохиолдолд тоглогчийн ээлжийг солино 
        // Хэрэв идэвхтэй 
