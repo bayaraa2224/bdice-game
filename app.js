@@ -1,115 +1,117 @@
- // Тоглоом дууссан эсэхийг хадгалах төлөвийн хувьсагч 
- var isNewGame
+//  Тоглоом дууссан эсэхийг хадгалах төлөвийн хувьсагч 
+var isNewGame;
 
-// Тоглоомыг бүх газарт ашиглах глобаль хувьсагчдыг энд хадгалья 
+//  Тоглогчийн ээлжийг хадгалах хувьсагч , нэгдүгээр тоглогчийг 0 ,хоёрдугаар тоглогчийг 1 гэж тэмдэглэе. 
+// Тоглоомыг бүх газарт ашиглагдах глобаль хувьсагчдыг энд  хадгалъя
 var activePlayer;
 
-// 2 Тоглогчдын цуглуулсан оноонууд 
- var scores;
+// 2 Тоглогчийн цуглуулсан оноонууд 
+var scores;
 
+// Тоглогийн ээлжиндээ цуглуулж байгаа оноог хадгалах
+var roundScore;
 
-  
- // Тоглогчдын ээлжиндээ цуглуулж байгаа оноог хадгалах 
- var roundScore;
- 
- // Шооны зургийг үзүүлэх элементийн Dом оос хайж олоод энд хадгалья 
- var diceDom =document.querySelector(".dice");
+// Шооны зургийг үзүүлэх элемтентийн DOM оос хайж олоод энд хадгалья
+var diceDom = document.querySelector(".dice");
 
-  function initGame() {
+// тоглоомын эхлүүлнэ 
+initGame();
 
-   isNewGame = true;
-   
-   //Тоглогчийн ээлжийг хадгалах хувьсагч , нэгдүгээр  тоглогчийг  0 , хоёрдугаар тоглогчийг 1 гэж тэмдэглэе .
-   activePlayer = 0 ;
+//  тоглоомыг эхнээс нь эхлүүлэхэд бэлтгэнэ 
+function initGame() {
+  //  Тоглоом эхэллээ гэдэг төлөвт оруулна 
+  isNewGame = true;
 
-   // Тоглогчийн ээлжиндээ цуглуулж байгаа оноог хадгалах хувьсагч 
-   roundScore = 0;
+  // Тоглогчийн ээлжийг хадгалах хувьсагч ,нэгдүгээр тоглогчийг 0 , хоёрдугаар тоглогчийг 1 гэж тэмдэглэе.
+  activePlayer = 0;
 
-// програм эхлүүлхэд бэлдэх 
- document.getElementById("score-0").textContent="0";
- document.getElementById("score-1").textContent="0";
- document.getElementById("current-0").textContent = "0";
- document.getElementById("current-1").textContent = "0";
+  // Тоглогчдын цуглуулсан оноог хадгалах хувьсагч
+  scores = [0, 0];
 
-// Тоглогчдын нэрийг буцаау гаргах
-document.getElementById("name-0").textContent = " Player 1";
-document.getElementById("name-1").textContent = "Player 2";
-
-document.querySelector(".player-0-panel").classList.remove("winner");
-document.querySelector(".player-1-panel").classList.remove("winner");
-
-document.querySelector(".player-0-panel").classList.remove("active");
-document.querySelector(".player-1-panel").classList.remove("active");
-
-
-// Тоглогчийн ээлжийг хадгалах хувьсагч ,нэгдүгээр тоглогчийг 0 , хоёрдугаар тоглогчийг 1 гэж тэмдэглэе.
- activePlayer = 0;
-
- // Тоглогчдын цуглуулсан оноог хадгалар хувьсагч 
-  scores = [0 , 0];
+  // Тоглогчийн ээлжиндээ цуглуулж байгаа оноог хадгалах хувьсагч 
+  roundScore = 0;
 
   // програм эхлүүлхэд бэлдэх 
- //  програм эхлэхэд шоог алга болгох  
-diceDom.style.display="none"
+  document.getElementById("score-0").textContent = "0";
+  document.getElementById("score-1").textContent = "0";
+  document.getElementById("current-0").textContent = "0";
+  document.getElementById("current-1").textContent = "0";
 
+  // / Тоглогчдын нэрийг буцааж гаргах  
+  document.getElementById("name-0").textContent = "Player 1";
+  document.getElementById("name-1").textContent = "Player 2";
+
+  document.querySelector(".player-0-panel").classList.remove("winner");
+  document.querySelector(".player-1-panel").classList.remove("winner");
+
+  document.querySelector(".player-0-panel").classList.remove("active");
+  document.querySelector(".player-1-panel").classList.remove("active");
+  document.querySelector(".player-0-panel").classList.add("active");
+  diceDom.style.display = "none";
 }
-// Шоог Шидэх евэнт листенэр  
-document.querySelector(".btn-roll").addEventListener("click",function(){
-if (isNewGame)
- {
-// Шооны аль талаар нь бууж байгааг 
-// Шооны аль талаар буусны хадгалах хуьсагч 1 ээн нэмэгдүүлдэг нь хэрвээ 0    буусан      тохиолдол гарвал 1 ээн нь нэмэгдүүлсэн байдал  
- var diceNumber = Math.floor(Math.random() * 6 ) + 1;  
-  
- // Шооны зургыг веб дээр гараж ирнэ .
-  diceDom.style.display="block";
 
- // санамсаргүй буусаг тоонд харгалзах шооны зургийн вэб дээр гаргаж ирнэ.
-diceDom.src="/diced/dice-"+ diceNumber + ".png";
+// Шоог Шидэх евэнт листенэр
+document.querySelector(".btn-roll").addEventListener("click", function() {
+  if (isNewGame) {
+    // Шооны аль талаараа буусныг хадгалах хувьсагч хэрэгтэй 1-6 энэ хувсагчид санамсаргүйгээр үүсгэж өгнө 
+    var diceNumber = Math.floor(Math.random() * 6) + 1;
 
-// Буусан тоо нь 1 ээс ялгаатай бол идэвхтэй тоглогчийн ээлжийн оноог нэмэгдүүлнэ    
-if (diceNumber !== 1) { 
-            roundScore = roundScore + diceNumber;
-            document.getElementById(
-               "current-" + activePlayer
-                ).textContent= roundScore;
-             }
-         else {
-           switchToNextPlayer();
-         }
-      } else {
-        alert("Тоглоом дууссан байна .New Game Товчийг шинээр эхэлнэ үү");
-      }
+    // Шооны зургыг веб  дээр гаргаж ирнэ . 
+    diceDom.style.display = "block";
+ //  санамсаргүй буусан тоонд харгалзах шооны зургийг вэб  дээр гаргаж  ирнэ 
+
+ diceDom.src = "dice-" + diceNumber + ".png";
+
+    // Буусан тоо нь 1 ээс ялгаатай бол идэвхтэй тоглогийн ээлжийн оноог нэмэгдүүлнэ
+    if (diceNumber !== 1) {
+      // 1- ээс ялгаатай тоо буулаа . Буусан тоог тоглогчид нэмж өгнө  
+      roundScore = roundScore + diceNumber;
+      document.getElementById(
+        "current-" + activePlayer
+      ).textContent = roundScore;
+      
+    } else {
+      // 1 нэг буусан тохиолдолд тоглогчийн ээлжийг солино 
+       // Хэрэв идэвхтэй 
+             switchToNextPlayer();
+    }
+  } else {
+    alert("Тоглоом дууссан байна .New Game Товчийг шинээр эхэлнэ үү");
+  }
 });
-// Hold Товчны евэнт листенер 
-document.querySelector(".btn-hold").addEventListener("click",function()
-{  
-  // Уг тоглогчийн цуглуулсан ээлжний оноог глобаль оноон дээр  
-  scores[activePlayer]=scores[activePlayer] + roundScore;
-  
-  // Дэлгэцэн дээр оноог нь өөрчилнө 
-   document.getElementById("score-" + activePlayer).textContent = 
-       scores[activePlayer];
-  
-  // Уг тоглогч хожсон эсэхийг( оноо нь 100-с их эсэх ) шалгах      
-   if (scores[activePlayer] >= 100)
-      {    // Тоглоомыг дууссан төлөвт оруулна 
-        isNewGame = false;
-        
-         // Ялагч гэсэг текстийн нэрнийх  нь оронд гаргана 
-      document.getElementById("name-"+ activePlayer).textContent = "WINNER!!!";
-        document.querySelector(".player-" + activePlayer + "-panel")
-        .classList.add("winner");
-      document 
-        .querySelector("player-" + activePlayer + "-panel")
-        .classList.remove("active");  
-      } else {
-          // Тоглогчийн ээлжийг солих 
-            switchToNextPlayer();
-      }    
-    });
+// HOLD  Товчны евэнт листенер 
+document.querySelector(".btn-hold").addEventListener("click", function() {
+  if (isNewGame) {
+    //  Уг тоглогчийн цуглуулсан ээлжний оноог глобаль оноон дээр нь  нэмж өгнө 
+    scores[activePlayer] = scores[activePlayer] + roundScore;
 
-    // Энэ функц нь тоглох ээлжийг дараачийн тоглогч руу шилжүүлдэг 
+    // Дэлгэцэн дээр оноог нь өөрчилнө
+    document.getElementById("score-" + activePlayer).textContent =
+      scores[activePlayer];
+
+    // Уг тоглогч хожсон эсэхийг ( оноо  нь 100 -с их эсэх ) шалгах 
+    if (scores[activePlayer] >= 10) {
+      // Тоглоомыг дууссан төлөвт оруулна 
+      isNewGame = false;
+
+      //  Ялагч гэсэн текстийн нэрнийх нь оронд гаргана 
+      document.getElementById("name-" + activePlayer).textContent = "WINNER!!!";
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.add("winner");
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.remove("active");
+    } else {
+      //  Тоглогчийн ээлжийг солих 
+      switchToNextPlayer();
+    }
+  } else {
+    alert("Тоглоом дууссан байна .New Game Товчийг шинээр эхэлнэ үү");
+  }
+});
+
+// Энэ функц нь тоглох ээлжийг дараачийн тоглогч руу шилжүүлдэг 
 function switchToNextPlayer() {
   // Энэ тоглогчийн ээлжиндээ  цуглуулсан оноог 0 болгоно 
   roundScore = 0;
@@ -126,5 +128,6 @@ function switchToNextPlayer() {
   //  Шоог  түр алга  болгоно 
   diceDom.style.display = "none";
 }
-//Шоог бүрэн хаянсан
+
+// New Game  Тоглоом эхлүүлэх товчний эвент листенер 
 document.querySelector(".btn-new").addEventListener("click", initGame);
