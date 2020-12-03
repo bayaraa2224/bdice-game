@@ -126,4 +126,5 @@ function switchToNextPlayer() {
   //  Шоог  түр алга  болгоно 
   diceDom.style.display = "none";
 }
+//Шоог бүрэн хаянсан
 document.querySelector(".btn-new").addEventListener("click", initGame);
